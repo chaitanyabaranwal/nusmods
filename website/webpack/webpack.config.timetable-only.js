@@ -1,5 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
@@ -68,6 +69,7 @@ const productionConfig = merge([
       }),
       new HtmlWebpackInlineSourcePlugin(),
       cssExtractPlugin,
+      new CleanWebpackPlugin(),
     ],
   },
   parts.loadImages({
@@ -76,7 +78,6 @@ const productionConfig = merge([
       name: 'img/[name].[hash].[ext]',
     },
   }),
-  parts.clean(parts.PATHS.buildTimetable),
 ]);
 
 module.exports = productionConfig;

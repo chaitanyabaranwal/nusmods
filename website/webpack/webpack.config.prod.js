@@ -4,6 +4,7 @@ const TerserJsPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -97,6 +98,7 @@ const productionConfig = merge([
         new CompressionPlugin({
           test: /\.(js|css|html|json|svg|xml|txt)$/,
         }),
+      !IS_CI && new CleanWebpackPlugin(),
       // Copy files from static folder over to dist
       new CopyWebpackPlugin([{ from: 'static', context: parts.PATHS.root }], {
         copyUnmodified: true,
@@ -133,7 +135,6 @@ const productionConfig = merge([
       runtimeChunk: 'single',
     },
   },
-  parts.clean(parts.PATHS.build),
   // If the file size is below the specified limit
   // the file is converted into a data URL and inlined to avoid requests.
   parts.loadImages({
