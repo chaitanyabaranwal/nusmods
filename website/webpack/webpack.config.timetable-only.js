@@ -52,8 +52,9 @@ const productionConfig = merge([
             MiniCssExtractPlugin.loader,
             ...parts.getCSSConfig({
               options: {
-                modules: true,
-                localIdentName: '[hash:base64:8]',
+                modules: {
+                  localIdentName: '[hash:base64:8]',
+                },
               },
             }),
           ],

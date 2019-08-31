@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const childProcess = require('child_process');
 const moment = require('moment');
@@ -163,9 +163,11 @@ exports.getCSSConfig = ({ options } = {}) => [
   {
     loader: 'sass-loader',
     options: {
-      // @material packages uses '@material' directly as part of their import paths.
-      // Without this those imports will not resolve properly
-      includePaths: [PATHS.node],
+      sassOptions: {
+        // @material packages uses '@material' directly as part of their import paths.
+        // Without this those imports will not resolve properly
+        includePaths: [PATHS.node],
+      },
     },
   },
 ];
